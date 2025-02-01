@@ -1,16 +1,27 @@
 import { Request, Response, Router } from "express";
 import jwt from "jsonwebtoken";
-import { createEvents } from "../controllers/eventsContollers";
+import {
+  categoryEvents,
+  createEvents,
+  getCategories,
+} from "../controllers/eventsContollers";
 import multer from "multer";
 import prismaClient from "../prisma/prisma";
 
 import uploadsConfig from "../config/multer";
+import { isAuthenticatedUser } from "../middleware/auth";
 const uploads = multer(uploadsConfig);
 
 const eventRouter = Router();
 
-eventRouter.post("/register", uploads.array("image"), createEvents);
-eventRouter.post("/register-category", createEvents);
+eventRouter.post(
+  "/register",
+  isAuthenticatedUser,
+  uploads.array("image"),
+  createEvents
+);
+eventRouter.post("/register-category", categoryEvents);
+eventRouter.get("/get-category", getCategories);
 
 eventRouter.get("/verify", async (req: Request, res: Response) => {
   try {

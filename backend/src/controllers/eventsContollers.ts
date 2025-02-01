@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
-import { CreateEvents, CategoryEvents } from "../services/eventsServices";
+import {
+  CreateEvents,
+  CategoryEvents,
+  GetCategories,
+} from "../services/eventsServices";
 
 export const createEvents = async (req: Request, res: Response) => {
   try {
@@ -12,6 +16,7 @@ export const createEvents = async (req: Request, res: Response) => {
       state,
       street,
       zipCode,
+      categoryId,
     } = req.body;
 
     const image_filename = req.files as Express.Multer.File[];
@@ -31,6 +36,7 @@ export const createEvents = async (req: Request, res: Response) => {
       street,
       zipCode,
       image,
+      categoryId,
     });
     res.status(201).json({ message: "Events created successfully", events });
   } catch (error) {
@@ -45,5 +51,16 @@ export const categoryEvents = async (req: Request, res: Response) => {
     res.status(201).json({ message: "Events created successfully", events });
   } catch (error) {
     res.status(500).json({ error: "Events creation failed" });
+  }
+};
+
+export const getCategories = async (req: Request, res: Response) => {
+  try {
+    const categories = await GetCategories();
+    res
+      .status(201)
+      .json({ message: "Successfully retrieved categories", categories });
+  } catch (error) {
+    res.status(500).json({ error: "Categories failed" });
   }
 };

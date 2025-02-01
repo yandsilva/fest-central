@@ -19,6 +19,7 @@ export default function Navbar() {
   const handleLogout = () => {
     dispatch(logoutUser());
     toast.success("Logout successfully");
+    navigateTo("/");
   };
 
   const navigateTo = useNavigate();
@@ -45,11 +46,11 @@ export default function Navbar() {
   return (
     <div className="bg-dark">
       <div className="mx-2 flex items-center justify-between py-4 sm:mx-14">
-        <Link className="flex items-center" to="/">
+        <a href="/" className="flex items-center">
           {/* <Tickets size={40} color="white" /> */}
           <img src={assets.ticket} alt="" className="w-14" />
           <h1 className="font-lalezar text-4xl text-yellow">FestCentral</h1>
-        </Link>
+        </a>
         {/* MENU */}
         <ul className="hidden gap-5 font-montserrat font-semibold text-white md:flex">
           <NavLink to="/" className="flex flex-col items-center gap-1">
@@ -71,9 +72,8 @@ export default function Navbar() {
         </ul>
 
         <div className="hidden items-center gap-6 font-montserrat font-semibold text-white sm:flex">
-          <div>
-            <Link to="/new-event ">Criar Evento</Link>
-          </div>
+          {!auth ? "" : <Link to="/new-event">Criar Evento</Link>}
+
           {!auth && (
             <Link to="/login">
               <Button>Entrar</Button>

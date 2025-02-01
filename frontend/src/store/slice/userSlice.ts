@@ -217,15 +217,10 @@ export const verifyToken = () => async (dispatch: AppDispatch) => {
 
 export const logoutUser = () => async (dispatch: AppDispatch) => {
   try {
-    const { data } = await axios.post(
-      "http://localhost:3333/api/v1/user/logout",
-      { withCredentials: true },
-    );
-
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
-    dispatch(userSlice.actions.logoutSuccess(data.message));
+    dispatch(userSlice.actions.logoutSuccess("Logout realizado com sucesso!"));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error: any) {
     dispatch(
