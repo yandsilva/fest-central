@@ -106,7 +106,9 @@ export default function Navbar() {
                 <div className="dropdown-menu absolute right-0 z-20 hidden pt-1 group-hover:block">
                   <div className="flex w-fit flex-col gap-3 rounded bg-white px-5 py-2 pt-3 text-darker">
                     <p className="cursor-pointer">Interessados</p>
-                    <p className="cursor-pointer">Configurações</p>
+                    <a href="/account-config" className="cursor-pointer">
+                      Configurações
+                    </a>
 
                     <p className="cursor-pointer">
                       <button onClick={handleLogout}>Log Out </button>

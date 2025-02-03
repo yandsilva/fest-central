@@ -9,6 +9,7 @@ import NewEvent from "./pages/NewEvent";
 import InterestedEvents from "./pages/InterestedEvents";
 import CreateLogin from "./components/CreateLogin";
 import Cart from "./pages/Cart";
+import SiderbarConfig from "./components/SiderbarConfig";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/new-event" element={<NewEvent />} />
         <Route path="/interested-events" element={<InterestedEvents />} />
+        <Route path="/account-config" element={<SiderbarConfig />} />
       </Routes>
     </div>
   );

@@ -27,6 +27,7 @@ module.exports = {
         grayishLight: "#A9A9A9", // Cinza intermediário claro
         slateGray: "#6F6F6F", // Cinza claro
         tomato: "#FF6347", // Tom de tomate
+        lightGray: "#EEEEEE", // Cinza mais claro
 
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
