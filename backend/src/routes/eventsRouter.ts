@@ -4,6 +4,7 @@ import {
   categoryEvents,
   createEvents,
   getCategories,
+  getEvents,
 } from "../controllers/eventsContollers";
 import multer from "multer";
 import prismaClient from "../prisma/prisma";
@@ -20,6 +21,7 @@ eventRouter.post(
   uploads.array("image"),
   createEvents
 );
+eventRouter.get("/get-events", getEvents);
 eventRouter.post("/register-category", categoryEvents);
 eventRouter.get("/get-category", getCategories);
 

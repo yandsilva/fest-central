@@ -3,6 +3,7 @@ import {
   CreateEvents,
   CategoryEvents,
   GetCategories,
+  GetEvents,
 } from "../services/eventsServices";
 
 export const createEvents = async (req: Request, res: Response) => {
@@ -41,6 +42,15 @@ export const createEvents = async (req: Request, res: Response) => {
     res.status(201).json({ message: "Events created successfully", events });
   } catch (error) {
     res.status(500).json({ error: "Events creation failed" });
+  }
+};
+
+export const getEvents = async (req: Request, res: Response) => {
+  try {
+    const events = await GetEvents();
+    res.status(201).json({ message: "Successfully retrieved events", events });
+  } catch (error) {
+    res.status(500).json({ error: "Events failed" });
   }
 };
 

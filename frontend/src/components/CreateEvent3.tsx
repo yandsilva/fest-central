@@ -1,131 +1,150 @@
 import { ArrowLeft, CalendarDays, Clock5 } from "lucide-react";
 import { Link } from "react-router-dom";
-import img_1 from "../assets/img_1.png";
-import { IoTicket } from "react-icons/io5";
 import { Button } from "./ui/button";
+import { IoTicket } from "react-icons/io5";
 
-type CreateEventProps = {
+interface EventDetails {
+  title: string;
+  date: string;
+  time: string;
+  location: {
+    cep: string;
+    street: string;
+    number: string;
+    neighborhood: string;
+    city: string;
+    state: string;
+  };
+  ticketType: "paid" | "free";
+  ticketPrice?: string;
+  description: string;
+  image: string;
+  hostName: string;
+}
+
+interface CreateEvent3Props {
   onBack: () => void;
-};
+  onSubmit: () => void;
+  eventData: EventDetails;
+}
 
-export default function CreateEvent3({ onBack }: CreateEventProps) {
+export default function CreateEvent3({
+  onBack,
+  onSubmit,
+  eventData,
+}: CreateEvent3Props) {
   return (
-    <div className="mb-20 flex flex-col gap-16 text-darker">
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-14">
-          <Link onClick={onBack} to={""}>
+    <div className="flex flex-col gap-8 p-4">
+      {/* Cabeçalho */}
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-4">
+          <Link
+            to=""
+            onClick={(e) => {
+              e.preventDefault();
+              onBack();
+            }}
+          >
             <ArrowLeft size={30} />
           </Link>
-          <h2 className="font-montserrat text-4xl font-bold text-darker">
-            Titulo do Evento
-          </h2>
+          <h2 className="text-2xl font-bold">{eventData.title}</h2>
         </div>
-        <div className="ml-[85px] flex flex-col gap-1 font-montserrat text-xl font-semibold">
-          <p>Location</p>
-          <p>Time</p>
+        <div className="ml-4">
+          <p>
+            {eventData.location.street}, {eventData.location.number}
+          </p>
+          <p>
+            {eventData.date} • {eventData.time}
+          </p>
         </div>
       </div>
-      <p className="m-auto w-[86%] font-opensans font-light text-darker">
-        Quase lá! Verifique se tudo está correto.
-      </p>
 
-      <div className="m-auto flex w-5/6 flex-col gap-10 rounded-2xl border-2 border-dark p-8">
-        <div className="m-auto w-full">
-          <img
-            className="max-h-[400px] w-full rounded-2xl"
-            src={img_1}
-            alt=""
-          />
-        </div>
-        <p className="-mt-5 font-opensans text-4xl font-extrabold">
-          Titulo do Evento
+      {/* Preview do Evento */}
+      <div className="space-y-6">
+        <p className="text-center text-gray-600">
+          Verifique se tudo está correto
         </p>
 
-        {/* DATA E HORA */}
-        <div className="flex justify-between">
-          <div className="flex flex-col gap-3">
-            <p className="font-opensans text-2xl font-bold">Data e Hora</p>
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-2">
-                <CalendarDays />
-                <p className="font-opensans text-sm font-semibold">
-                  27/01/2025
-                </p>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock5 />
-                <p className="font-opensans text-sm font-semibold">02:00 PM</p>
-              </div>
-            </div>
-          </div>
-          <div className="mr-5 flex flex-col gap-3">
-            <p className="font-opensans text-2xl font-bold">
-              Informações sobre o Ticket
-            </p>
-            <div className="flex gap-2">
-              <IoTicket size={25} />
-              <p className="font-opensans text-sm font-semibold">
-                Tipo de Ticket: <span>Preço/Grátis</span>
-              </p>
-            </div>
-          </div>
-        </div>
-        {/* LOCALIZAÇÃO */}
-        <div className="flex flex-col gap-3">
-          <p className="font-opensans text-2xl font-bold">Localização</p>
-          <div className="flex w-fit flex-col gap-1 rounded-md border-2 border-dark/50 py-4 pl-2 pr-16">
-            <p className="font-opensans font-medium">CEP:1234545676 </p>
-            <p className="font-opensans font-medium">
-              Rua: ASDFASDFASDF <span>Nºasasdfadfasd</span>
-            </p>
-            <p className="font-opensans font-medium">Bairro: asdfasdfasdf</p>
-            <p className="font-opensans font-medium">Cidade: fadfasdfasdfaf</p>
-            <p className="font-opensans font-medium">Estado: fasdfasdfadsf</p>
-          </div>
-        </div>
-        {/* REDES SOCIAIS */}
-        <div className="flex flex-col gap-3">
-          <p className="font-opensans text-2xl font-bold">Hosted by</p>
-          <div className="flex gap-2">
-            <div className="h-16 w-16 rounded-lg bg-dark/50"></div>
-            <div className="flex flex-col justify-between">
-              <p className="font-opensans font-semibold">Host Name</p>
-              <div className="flex gap-2">
-                <button className="rounded-md border border-dark px-2 py-1 font-opensans text-sm font-semibold transition ease-out hover:bg-dark hover:text-white">
-                  Contato
-                </button>
-                <button className="rounded-md border border-dark bg-dark px-2 py-1 font-opensans text-sm font-semibold text-white transition ease-in-out hover:text-yellow">
-                  + Follow
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div className="rounded-xl border p-6 shadow-sm">
+          {/* Imagem */}
+          <img
+            src={eventData.image}
+            alt="Evento"
+            className="mb-6 h-64 w-full rounded-lg object-cover"
+          />
 
-        {/* DESCRIÇÃO */}
-        <div className="flex flex-col gap-3">
-          <p className="font-opensans text-2xl font-bold">Descrição</p>
-          <div>
-            <p className="font-opensans text-sm font-medium">
-              Prepare-se para uma aventura emocionante no coração da natureza
-              com o Desafio das Montanhas, um evento de trilha de bicicleta que
-              reúne atletas e entusiastas do ciclismo em um percurso desafiador
-              e inesquecível. Este evento é ideal para quem busca superar
-              limites, explorar paisagens deslumbrantes e viver uma experiência
-              repleta de adrenalina. O trajeto atravessa trilhas sinuosas,
-              ladeiras íngremes, descidas emocionantes e trechos planos,
-              passando por rios, florestas nativas e mirantes que proporcionam
-              vistas panorâmicas espetaculares. Sinalização adequada e pontos de
-              hidratação estarão disponíveis ao longo do caminho para garantir
-              segurança e conforto.
-            </p>
+          {/* Data e Ingressos */}
+          <div className="flex flex-wrap justify-between gap-4 border-b pb-4">
+            <div className="space-y-2">
+              <p className="font-semibold">Data e Hora</p>
+              <div className="flex items-center gap-2">
+                <CalendarDays size={20} />
+                <span>{eventData.date}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock5 size={20} />
+                <span>{eventData.time}</span>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <p className="font-semibold">Ingressos</p>
+              <div className="flex items-center gap-2">
+                <IoTicket size={20} />
+                <span>
+                  {eventData.ticketType === "paid"
+                    ? `R$ ${eventData.ticketPrice}`
+                    : "Evento Gratuito"}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Localização */}
+          <div className="border-b py-4">
+            <p className="mb-2 font-semibold">Localização</p>
+            <div className="space-y-1 text-sm">
+              <p>CEP: {eventData.location.cep}</p>
+              <p>
+                Rua: {eventData.location.street}, Nº {eventData.location.number}
+              </p>
+              <p>Bairro: {eventData.location.neighborhood}</p>
+              <p>Cidade: {eventData.location.city}</p>
+              <p>Estado: {eventData.location.state}</p>
+            </div>
+          </div>
+
+          {/* Organizador */}
+          <div className="border-b py-4">
+            <p className="mb-2 font-semibold">Organizado por</p>
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 rounded-full bg-gray-200" />
+              <div>
+                <p className="font-medium">{eventData.hostName}</p>
+                <div className="mt-2 flex gap-2">
+                  <Button variant="outline" size="sm">
+                    Contato
+                  </Button>
+                  <Button size="sm">Seguir</Button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Descrição */}
+          <div className="pt-4">
+            <p className="mb-2 font-semibold">Descrição</p>
+            <p className="text-sm text-gray-600">{eventData.description}</p>
           </div>
         </div>
       </div>
-      <div className="flex w-[90%] justify-end gap-5">
-        <Button size={"lg"} variant={"secondary"}>
-          Salvar & Continuar
+
+      {/* Botões */}
+      <div className="flex justify-end gap-4">
+        <Button variant="outline" onClick={onBack}>
+          Voltar
         </Button>
+        <Button onClick={onSubmit}>Publicar Evento</Button>
       </div>
     </div>
   );

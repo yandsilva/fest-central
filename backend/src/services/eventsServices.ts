@@ -51,6 +51,11 @@ export const CreateEvents = async (data: CreateEventsProps) => {
   return events;
 };
 
+export const GetEvents = async () => {
+  const events = await prismaClient.events.findMany();
+  return events;
+};
+
 export const CategoryEvents = async (data: CreateCategorysProps) => {
   const { name } = data;
   const categories = await prismaClient.categories.create({

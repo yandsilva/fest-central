@@ -1,114 +1,136 @@
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { IoTicketOutline } from "react-icons/io5";
-import { assets } from "../assets/assets";
-import { ChangeEvent, useState } from "react";
 import { Button } from "./ui/button";
+import { ChangeEvent, useState } from "react";
 
-type CreateEventProps = {
+type TicketType = "paid" | "free";
+
+interface CreateEvent2Props {
   onBack: () => void;
   onContinue: () => void;
-};
+  updateData: (data: {
+    ticketType: TicketType;
+    ticketName: string;
+    ticketPrice: string;
+  }) => void;
+}
+
+interface TicketData {
+  type: TicketType;
+  name: string;
+  price: string;
+}
 
 export default function CreateEvent2({
   onBack,
   onContinue,
-}: CreateEventProps): JSX.Element {
-  const [value, setValue] = useState<string>("");
-  const [showTicket, setShowTicket] = useState<boolean>(true);
+  updateData,
+}: CreateEvent2Props) {
+  const [ticketData, setTicketData] = useState<TicketData>({
+    type: "paid",
+    name: "",
+    price: "",
+  });
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const numericValue = e.target.value.replace(/[^\d,]/g, "");
-    setValue(numericValue);
+  const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const numericValue = e.target.value
+      .replace(/[^\d,]/g, "")
+      .replace(/(\..*)\./g, "$1");
+
+    setTicketData((prev) => ({
+      ...prev,
+      price: numericValue,
+    }));
   };
 
-  const handleBlur = (): void => {
-    const numericValue = parseFloat(value.replace(",", ".") || "0");
-    const formattedValue = new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-      minimumFractionDigits: 2,
-    }).format(numericValue);
-    setValue(formattedValue.replace("R$", "").trim());
+  const handleSubmit = () => {
+    updateData({
+      ticketType: ticketData.type,
+      ticketName: ticketData.name,
+      ticketPrice: ticketData.type === "paid" ? ticketData.price : "0",
+    });
+    onContinue();
   };
 
   return (
-    <div className="flex flex-col gap-20 text-darker">
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-14">
-          <Link onClick={onBack} to={""}>
+    <div className="flex flex-col gap-8 p-4">
+      {/* Cabeçalho */}
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-4">
+          <Link
+            to=""
+            onClick={(e) => {
+              e.preventDefault();
+              onBack();
+            }}
+          >
             <ArrowLeft size={30} />
           </Link>
-          <h2 className="font-montserrat text-4xl font-bold text-darker">
-            Titulo do Evento
-          </h2>
+          <h2 className="text-2xl font-bold">Título do Evento</h2>
         </div>
-        <div className="ml-[85px] flex flex-col gap-1 font-montserrat text-xl font-semibold">
+        <div className="ml-4">
           <p>Location</p>
           <p>Time</p>
         </div>
       </div>
-      <div className="m-auto flex w-[80%] flex-col gap-5">
-        <p className="font-montserrat text-2xl font-medium">
-          Que tipo de evento você está organizando?
-        </p>
-        <div className="flex gap-5">
-          <button
-            onClick={() => setShowTicket(true)}
-            className="flex w-[300px] flex-col items-center gap-2 rounded-md border-2 border-dark py-5 hover:bg-[#F6FBFF]"
-          >
-            <IoTicketOutline color="#2B293D" size={50} />
-            <div>
-              <p className="font-opensans text-sm font-semibold">
-                Evento com ingressos
-              </p>
-              <p className="font-opensans text-sm">
-                Meu evento requer ingressos para entrada
-              </p>
-            </div>
-          </button>
-          <button
-            onClick={() => setShowTicket(false)}
-            className="flex w-[300px] flex-col items-center gap-2 rounded-md border-2 border-dark p-5 hover:bg-[#F6FBFF]"
-          >
-            <img className="w-12" src={assets.ticket_free} alt="" />
-            <div>
-              <p className="font-opensans text-sm font-semibold">
-                Evento Gratuito
-              </p>
-              <p className="font-opensans text-sm">
-                Estou realizando um evento gratuito
-              </p>
-            </div>
-          </button>
+
+      {/* Seleção de tipo de ingresso */}
+      <div className="space-y-4">
+        <p className="text-xl font-medium">Tipo de Evento</p>
+        <div className="flex gap-4">
+          {(["paid", "free"] as TicketType[]).map((type) => (
+            <button
+              key={type}
+              onClick={() => setTicketData((prev) => ({ ...prev, type }))}
+              className={`w-48 rounded-md border-2 p-4 ${
+                ticketData.type === type
+                  ? "border-blue-500 bg-blue-50"
+                  : "border-gray-300"
+              }`}
+            >
+              <div className="flex flex-col items-center gap-2">
+                {type === "paid" ? (
+                  <IoTicketOutline size={40} />
+                ) : (
+                  <span className="text-3xl">🎫</span>
+                )}
+                <p className="font-semibold">
+                  {type === "paid" ? "Evento Pago" : "Evento Gratuito"}
+                </p>
+              </div>
+            </button>
+          ))}
         </div>
-        <div>
-          <p className="font-montserrat text-2xl font-medium">
-            Quais ingressos você está vendendo?
-          </p>
-        </div>
-        <div className="flex items-center gap-5">
-          <div className="flex flex-col gap-1">
-            <p className="font-opensans font-semibold">Nome do Ticket</p>
+      </div>
+
+      {/* Detalhes dos ingressos */}
+      <div className="space-y-4">
+        <p className="text-xl font-medium">Detalhes dos Ingressos</p>
+
+        <div className="flex flex-col gap-4">
+          <div>
+            <label className="mb-2 block font-medium">Nome do Ingresso</label>
             <input
-              className="w-96 rounded-md border p-2"
-              placeholder="Exemplo: Admissão Geral"
+              value={ticketData.name}
+              onChange={(e) =>
+                setTicketData((prev) => ({ ...prev, name: e.target.value }))
+              }
+              className="w-full rounded-md border p-2"
+              placeholder="Ex: Entrada Geral"
             />
           </div>
 
-          {showTicket && (
-            <div className="flex flex-col gap-1">
-              <p className="font-opensans font-semibold">Preço do Ticket</p>
+          {ticketData.type === "paid" && (
+            <div>
+              <label className="mb-2 block font-medium">Preço</label>
               <div className="flex items-center rounded-md border">
-                <p className="rounded-l-md bg-[#828282] p-2 font-semibold text-white">
-                  R$
-                </p>
+                <span className="bg-gray-100 px-3">R$</span>
                 <input
                   type="text"
-                  value={value}
-                  onChange={handleInputChange}
-                  onBlur={handleBlur}
-                  className="w-40 border-none p-2"
+                  value={ticketData.price}
+                  onChange={handlePriceChange}
+                  className="w-32 border-none p-2"
                   placeholder="0,00"
                 />
               </div>
@@ -116,22 +138,14 @@ export default function CreateEvent2({
           )}
         </div>
       </div>
-      <div className="mb-12 mt-20 flex w-[90%] justify-end gap-5">
-        <Button
-          onClick={onBack}
-          className="font-montserrat font-semibold"
-          variant={"outline"}
-          size={"lg"}
-        >
+
+      {/* Botões de navegação */}
+      <div className="mt-8 flex justify-end gap-4">
+        <Button variant="outline" size="lg" onClick={onBack}>
           Voltar
         </Button>
-        <Button
-          onClick={onContinue}
-          className="font-montserrat font-bold"
-          variant={"secondary"}
-          size={"lg"}
-        >
-          Salvar & Continuar
+        <Button variant="secondary" size="lg" onClick={handleSubmit}>
+          Continuar
         </Button>
       </div>
     </div>
