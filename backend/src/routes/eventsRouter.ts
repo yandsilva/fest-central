@@ -15,12 +15,7 @@ const uploads = multer(uploadsConfig);
 
 const eventRouter = Router();
 
-eventRouter.post(
-  "/register",
-  isAuthenticatedUser,
-  uploads.array("image"),
-  createEvents
-);
+eventRouter.post("/register", uploads.array("image"), createEvents);
 eventRouter.get("/get-events", getEvents);
 eventRouter.post("/register-category", categoryEvents);
 eventRouter.get("/get-category", getCategories);

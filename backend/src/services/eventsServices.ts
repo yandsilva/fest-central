@@ -1,8 +1,9 @@
 import prismaClient from "../prisma/prisma";
-import path from "path";
 
 interface CreateEventsProps {
   title: string;
+  date: string;
+  time: string;
   description: string;
   zipCode: string;
   street: string;
@@ -11,7 +12,6 @@ interface CreateEventsProps {
   city: string;
   state: string;
   image: { path: string }[];
-  categoryId: string;
 }
 
 interface CreateCategorysProps {
@@ -21,6 +21,8 @@ interface CreateCategorysProps {
 export const CreateEvents = async (data: CreateEventsProps) => {
   const {
     title,
+    date,
+    time,
     description,
     city,
     neighborhood,
@@ -29,12 +31,13 @@ export const CreateEvents = async (data: CreateEventsProps) => {
     street,
     zipCode,
     image,
-    categoryId,
   } = data;
 
   const events = await prismaClient.events.create({
     data: {
       title,
+      date,
+      time,
       description,
       city,
       neighborhood,
@@ -45,7 +48,6 @@ export const CreateEvents = async (data: CreateEventsProps) => {
       image: {
         create: image,
       },
-      categoryId,
     },
   });
   return events;

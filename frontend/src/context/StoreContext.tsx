@@ -18,6 +18,7 @@ interface adress {
 
 interface Event {
   _id: string;
+  date: string;
   name: string;
   image: string;
   price: number;

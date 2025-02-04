@@ -29,19 +29,18 @@ model User {
 model Events {
   id           String   @id @default(uuid())
   title        String
-  description  String
+  date         String
+  time         String
   zipCode      String
   street       String
   number       String
   neighborhood String
   city         String
   state        String
+  description  String
   createdAt    DateTime @default(now()) @map("create_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
   image        Image[]
-
-  categories Categories? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  categoryId String?
 
   @@map("events")
 }
@@ -63,7 +62,6 @@ model Categories {
   name      String
   createdAt DateTime @default(now()) @map("create_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  Events    Events[]
 
   @@map("categories")
 }

@@ -17,7 +17,8 @@ export const createEvents = async (req: Request, res: Response) => {
       state,
       street,
       zipCode,
-      categoryId,
+      date,
+      time,
     } = req.body;
 
     const image_filename = req.files as Express.Multer.File[];
@@ -37,7 +38,8 @@ export const createEvents = async (req: Request, res: Response) => {
       street,
       zipCode,
       image,
-      categoryId,
+      date,
+      time,
     });
     res.status(201).json({ message: "Events created successfully", events });
   } catch (error) {

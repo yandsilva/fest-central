@@ -116,7 +116,7 @@ export const addNewEvents =
   (data: FormData) => async (dispatch: AppDispatch) => {
     dispatch(eventsSlice.actions.addNewEventsRequest());
     try {
-      const response = await axios.post<{ message: string }>(
+      const response = await axios.post(
         "http://localhost:3333/api/v1/events/register",
         data,
         {
