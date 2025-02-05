@@ -96,6 +96,42 @@ export default function NewEvent() {
         </div>
         {/* IMAGES */}
         <ImageEvent />
+
+        {/* PRICE AND TICKET */}
+
+        <div className="m-auto flex w-[80%] flex-col gap-3 pb-10">
+          <p className="ml-44 font-montserrat text-2xl font-medium text-darker">
+            Quais ingressos você está vendendo?
+          </p>
+          <div className="ml-44 flex w-[50%] flex-col gap-5">
+            <label className="flex flex-col gap-2">
+              <p className="font-opensans font-semibold text-dark">
+                Nome do Ticket
+              </p>
+              <input
+                className="rounded-md border p-2 outline-none"
+                type="text"
+                placeholder="Nome do Ticket"
+              />
+            </label>
+            <label className="flex flex-col gap-2">
+              <p className="font-opensans font-semibold text-dark">
+                Preço do Ticket
+              </p>
+              <div className="flex w-full items-center gap-2 rounded-md border">
+                <span className="bg-slate-300 p-2">R$</span>
+                <input className="w-full outline-none" type="number" />
+              </div>
+            </label>
+          </div>
+        </div>
+
+        {/* BUTTONS */}
+        <div className="m-auto flex w-[80%] flex-col items-end gap-3 pb-10">
+          <button className="w-fit rounded-md bg-dark p-3 font-opensans font-semibold text-white">
+            Publicar Evento
+          </button>
+        </div>
       </div>
       <Footer />
     </div>

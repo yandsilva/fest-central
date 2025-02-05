@@ -34,10 +34,13 @@ model Events {
   zipCode      String
   street       String
   number       String
+  complement   String
   neighborhood String
   city         String
   state        String
   description  String
+  ticketName   String   @map("ticket_name")
+  ticketPrice  String   @map("ticket_price")
   createdAt    DateTime @default(now()) @map("create_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
   image        Image[]
