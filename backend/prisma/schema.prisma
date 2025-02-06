@@ -43,7 +43,10 @@ model Events {
   ticketPrice  String   @map("ticket_price")
   createdAt    DateTime @default(now()) @map("create_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
+
   image        Image[]
+  Categories   Categories @relation(fields: [categoriesId], references: [id])
+  categoriesId String
 
   @@map("events")
 }
@@ -65,6 +68,8 @@ model Categories {
   name      String
   createdAt DateTime @default(now()) @map("create_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
+  events Events[]
 
   @@map("categories")
 }

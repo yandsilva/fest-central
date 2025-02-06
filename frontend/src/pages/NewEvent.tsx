@@ -2,8 +2,16 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ViaCep from "../components/ViaCep";
 import ImageEvent from "../components/ImageEvent";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { useNavigate } from "react-router-dom";
 
 export default function NewEvent() {
+  const dispatch = useAppDispatch();
+  const { error, events, loading, message } = useAppSelector(
+    (state) => state.events,
+  );
+  const navigate = useNavigate();
+
   return (
     <div>
       <Navbar />

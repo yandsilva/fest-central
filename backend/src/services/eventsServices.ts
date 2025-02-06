@@ -12,6 +12,10 @@ interface CreateEventsProps {
   city: string;
   state: string;
   image: { path: string }[];
+  categoriesId: string;
+  ticketName: string;
+  complement: string;
+  ticketPrice: string;
 }
 
 interface CreateCategorysProps {
@@ -31,6 +35,10 @@ export const CreateEvents = async (data: CreateEventsProps) => {
     street,
     zipCode,
     image,
+    categoriesId,
+    ticketName,
+    complement,
+    ticketPrice,
   } = data;
 
   const events = await prismaClient.events.create({
@@ -45,9 +53,13 @@ export const CreateEvents = async (data: CreateEventsProps) => {
       state,
       street,
       zipCode,
+      categoriesId,
       image: {
         create: image,
       },
+      ticketName,
+      complement,
+      ticketPrice,
     },
   });
   return events;
