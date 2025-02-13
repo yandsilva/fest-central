@@ -1,6 +1,13 @@
 import { useState } from "react";
+import { UseFormRegister } from "react-hook-form";
+import { NewEventFormProps } from "../pages/NewEvent";
 
-export default function ImageEvent() {
+interface ImageEventProps {
+  register: UseFormRegister<NewEventFormProps>;
+  errors: any;
+}
+
+export default function ImageEvent({ register, errors }: ImageEventProps) {
   const [preview, setPreview] = useState<string | null>(null);
 
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,11 +29,13 @@ export default function ImageEvent() {
           />
         )}
         <input
+          {...register("image")}
           type="file"
           onChange={handleImage}
           accept="image/*"
           className="avatar-update-btn"
         />
+        {errors.image && <p className="text-red-500">{errors.image.message}</p>}
       </div>
     </div>
   );

@@ -27,6 +27,7 @@ interface Event {
   time: string;
   rating: number;
   category: string;
+  description: string;
 }
 
 interface StoreContextType {

@@ -28,7 +28,7 @@ model User {
 
 model Events {
   id           String   @id @default(uuid())
-  title        String
+  name         String
   date         String
   time         String
   zipCode      String
@@ -69,7 +69,7 @@ model Categories {
   createdAt DateTime @default(now()) @map("create_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  events Events[]
+  Events Events[]
 
   @@map("categories")
 }

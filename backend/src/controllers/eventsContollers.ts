@@ -9,7 +9,7 @@ import {
 export const createEvents = async (req: Request, res: Response) => {
   try {
     const {
-      title,
+      name,
       description,
       city,
       neighborhood,
@@ -19,11 +19,12 @@ export const createEvents = async (req: Request, res: Response) => {
       zipCode,
       date,
       time,
-      categoriesId,
       ticketName,
       complement,
       ticketPrice,
+      categoriesId,
     } = req.body;
+    console.log(req.body);
 
     const image_filename = req.files as Express.Multer.File[];
     const image = image_filename.map((file) => {
@@ -32,8 +33,10 @@ export const createEvents = async (req: Request, res: Response) => {
       };
     });
 
+    console.log(image);
+
     const events = await CreateEvents({
-      title,
+      name,
       description,
       city,
       neighborhood,
@@ -44,10 +47,10 @@ export const createEvents = async (req: Request, res: Response) => {
       image,
       date,
       time,
-      categoriesId,
       ticketName,
       complement,
       ticketPrice,
+      categoriesId,
     });
     res.status(201).json({ message: "Events created successfully", events });
   } catch (error) {
