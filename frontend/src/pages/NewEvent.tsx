@@ -90,9 +90,9 @@ export default function NewEvent() {
       formData.append("ticketName", data.ticketName);
       formData.append("ticketPrice", data.ticketPrice);
       formData.append("categoriesId", data.categoriesId);
-      formData.append("image", data.image);
+      formData.append("image", data.image[0]);
 
-      console.log(data.categoriesId);
+      console.log(data.image);
 
       const response = await axios.post(
         "http://localhost:3333/api/v1/events/register",
