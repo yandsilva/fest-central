@@ -4,21 +4,39 @@ import { IoTicket, IoStar, IoStarOutline } from "react-icons/io5";
 interface EventsItemProps {
   id: string;
   name: string;
-  price: number;
-  image: string;
-  local: string;
+  date: string;
   time: string;
-  rating: number;
+  description: string;
+  zipCode: string;
+  street: string;
+  number: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  image: string[];
+  ticketName: string;
+  ticketPrice: string;
+  complement: string;
+  categoriesId: string;
 }
 
 export default function EventsItem({
   id,
   name,
-  price,
-  image,
-  local,
+  date,
   time,
-  rating,
+  description,
+  zipCode,
+  street,
+  number,
+  neighborhood,
+  city,
+  state,
+  image,
+  ticketName,
+  ticketPrice,
+  complement,
+  categoriesId,
 }: EventsItemProps) {
   const [favorite, setFavorite] = useState(false);
 
@@ -38,7 +56,11 @@ export default function EventsItem({
             />
           )}
         </div>
-        <img className="h-[170px] w-full rounded-t-md" src={image} alt="" />
+        <img
+          className="h-[170px] w-full rounded-t-md"
+          src={`http://localhost:3333/images/${image[0]}`}
+          alt=""
+        />
         <a href={`/cart/${id}`} className="flex gap-2 p-2">
           <div className="flex flex-col items-center">
             <p className="font-montserrat font-semibold text-purple">NOV</p>
@@ -55,7 +77,7 @@ export default function EventsItem({
               title="Adventure Geek - Explore the Unexplored, Mumbai"
               className="font-opensans text-sm font-medium text-darker"
             >
-              {local}
+              {name}
             </p>
             <p className="font-opensans text-sm font-light text-darker">
               {time}
@@ -64,12 +86,12 @@ export default function EventsItem({
               <div className="flex items-center gap-1">
                 <IoTicket />
                 <p className="font-opensans text-sm font-semibold text-grayish">
-                  {price}
+                  {ticketPrice}
                 </p>
               </div>
               <div className="flex items-center gap-1">
                 <IoStar className="text-purple" />
-                {rating}
+                {/* {rating} */}
                 <p className="font-opensans text-sm font-semibold text-grayish">
                   Interesse
                 </p>

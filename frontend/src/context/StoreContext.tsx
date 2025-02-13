@@ -5,39 +5,35 @@ import {
   SetStateAction,
   useState,
 } from "react";
-import { event_list } from "../assets/assets";
+import axios from "axios";
 
-interface adress {
-  cep: string;
-  rua: string;
-  numero: string;
-  bairro: string;
-  cidade: string;
-  estado: string;
-}
-
-interface Event {
-  _id: string;
-  date: string;
+interface EventsItemProps {
+  id: string;
   name: string;
-  image: string;
-  price: number;
-  local: string;
-  adress: adress;
+  date: string;
   time: string;
-  rating: number;
-  category: string;
   description: string;
+  zipCode: string;
+  street: string;
+  number: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  image: string[];
+  ticketName: string;
+  ticketPrice: string;
+  complement: string;
+  categoriesId: string;
 }
 
 interface StoreContextType {
-  event_list: Event[];
+  event_list: EventsItemProps[];
   search: string;
   setSearch: Dispatch<SetStateAction<string>>;
 }
 
 export const StoreContext = createContext<StoreContextType>({
-  event_list,
+  eventList,
   search: "",
   setSearch: () => {},
 });
@@ -47,10 +43,20 @@ interface StoreContextProviderProps {
 }
 
 const StoreContextProvider = ({ children }: StoreContextProviderProps) => {
+  const [eventList, setEventList] = useState<EventsItemProps[]>([]);
   const [search, setSearch] = useState<string>("");
 
+  async function getEvents() {
+    const response = await axios.get(
+      "http://localhost:3333/api/v1/events/get-events",
+    );
+    setEventList(response.data.events);
+    console.log(response.data.events);
+    getEvents();
+  }
+
   const contextValue: StoreContextType = {
-    event_list,
+    eventList,
     search,
     setSearch,
   };

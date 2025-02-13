@@ -65,7 +65,11 @@ export const CreateEvents = async (data: CreateEventsProps) => {
 };
 
 export const GetEvents = async () => {
-  const events = await prismaClient.events.findMany();
+  const events = await prismaClient.events.findMany({
+    include: {
+      image: true,
+    },
+  });
   return events;
 };
 
